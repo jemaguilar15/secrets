@@ -4,6 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const User = require('./model/db');
+// const md5 = require('md5');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const app = express();
 
@@ -30,42 +33,49 @@ app.get("/register", (req, res) => {
 //| POST ROUTES
 //|------------------
 app.post("/register", (req, res) => {
-    const newUser = new User({
-        email: req.body.username,
-        pass: req.body.password
+    bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        const newUser = new User({
+            email: req.body.username,
+            pass: hash
+        });
+
+        newUser.save((err) => {
+            if(!err) {
+                console.log("Successfully saved.");
+                res.render("secrets")
+            } else {
+                console.log(err);
+            }
+        });
     });
 
-    newUser.save((err) => {
-        if(!err) {
-            console.log("Successfully saved.");
-            res.render("secrets")
-        } else {
-            console.log(err);
-        }
-    });
 });
 
 app.post("/login", (req, res) => {
     const username = req.body.username;
-    const password = req.body.password;
-
-    User.findOne({
-        email: username
-    }, (err, foundUser) => {
+    const pass = req.body.password;
+    
+    User.findOne({ email: username }, (err, foundUser) => {
         if(err) {
             console.log(err);
             
         } else {
-            if(foundUser) {
-                if(foundUser.pass === password) {
+            console.log(foundUser);
+            // Load hash from your password DB.
+            bcrypt.compare(pass, foundUser.pass, function(err, result) {
+                if(result == true) {
+                    console.log("Login successfully");
                     res.render("secrets");
                 } else {
-                    console.log("Incorrect credentials.");
-                    
+                    console.log(foundUser.pass);
                 }
-            } 
+            });
         }
     });
+});
+
+app.get("/logout", () => {
+
 });
 
 app.listen(3000, () => {
