@@ -8,6 +8,7 @@ const User = require('./model/db');
 // const bcrypt = require('bcrypt');
 // const saltRounds = 10;
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
 const passport = require('passport');
 
 const findOrCreate = require('mongoose-findorcreate');
@@ -22,6 +23,10 @@ app.use(bodyParser.urlencoded({
 
 // 1st app.use
 app.use(session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
     secret: "Ourlittlesecret.",
     resave: false,
     saveUninitialized: false
