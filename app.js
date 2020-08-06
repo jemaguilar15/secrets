@@ -211,7 +211,7 @@ app.post("/login", (req, res) => {
             
         } else {
             // passport.authenticate('local')(req, res, () => {
-            passport.authenticate('heroku')(req, res, () => {
+            passport.authenticate("heroku")(req, res, () => {
                 res.redirect("/secrets");
             });
         }
