@@ -27,9 +27,7 @@ app.use(session({
     store: new MemoryStore({
         checkPeriod: 86400000 // prune expired entries every 24h
     }),
-    secret: "Ourlittlesecret.",
-    resave: false,
-    saveUninitialized: false
+    secret: "Ourlittlesecret."
 }));
 
 // 2nd app.use
