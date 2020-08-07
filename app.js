@@ -240,11 +240,11 @@ app.post("/submit", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    // req.logout();
-    req.session.destroy(err, () => {
-        res.redirect("/");
-    });
-    
+    req.logout();
+    // req.session.destroy(err, () => {
+    //     res.redirect("/");
+    // });
+    res.redirect("/");
 });
 
 app.listen(process.env.PORT || 3000, () => {
