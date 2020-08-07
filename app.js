@@ -23,10 +23,10 @@ app.use(bodyParser.urlencoded({
 
 // 1st app.use
 app.use(session({   
-    cookie: { maxAge: 86400000 },
-    store: new MemoryStore({
-        checkPeriod: 86400000 // prune expired entries every 24h
-    }),
+    // cookie: { maxAge: 86400000 },
+    // store: new MemoryStore({
+    //     checkPeriod: 86400000 // prune expired entries every 24h
+    // }),
     secret: "Ourlittlesecret.",
     resave: false,
     saveUninitialized: true
@@ -240,8 +240,11 @@ app.post("/submit", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    req.logout();
-    res.redirect("/");
+    // req.logout();
+    req.session.destroy(err, () => {
+        res.redirect("/");
+    });
+    
 });
 
 app.listen(process.env.PORT || 3000, () => {
