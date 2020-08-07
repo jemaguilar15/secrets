@@ -27,6 +27,7 @@ app.use(session({
     // store: new MemoryStore({
     //     checkPeriod: 86400000 // prune expired entries every 24h
     // }),
+    cookie: { secure: true },
     secret: "Ourlittlesecret.",
     resave: false,
     saveUninitialized: true
@@ -61,7 +62,7 @@ passport.use(new GoogleStrategy({
     userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
   },
   function(accessToken, refreshToken, profile, cb) {
-      console.log(profile);
+    //   console.log(profile);
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
@@ -75,7 +76,7 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://fierce-plateau-97384.herokuapp.com/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, done) {
-      console.log(profile);
+    //   console.log(profile);
     User.findOrCreate({ facebookId: profile.id }, function(err, user) {
       if (err) { return done(err); }
       done(null, user);
