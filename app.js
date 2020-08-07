@@ -57,7 +57,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     // callbackURL: "http://localhost:3000/auth/google/secrets",
-    callbackURL: "https://fierce-plateau-97384.herokuapp.com/auth/google/secrets",
+    callbackURL: "http://fierce-plateau-97384.herokuapp.com/auth/google/secrets",
     userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -72,7 +72,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
     // callbackURL: "http://localhost:3000/auth/facebook/secrets"
-    callbackURL: "https://fierce-plateau-97384.herokuapp.com/auth/facebook/secrets"
+    callbackURL: "http://fierce-plateau-97384.herokuapp.com/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, done) {
       console.log(profile);
