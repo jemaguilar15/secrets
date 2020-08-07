@@ -22,12 +22,14 @@ app.use(bodyParser.urlencoded({
 }));
 
 // 1st app.use
-app.use(session({
+app.use(session({   
     cookie: { maxAge: 86400000 },
     store: new MemoryStore({
         checkPeriod: 86400000 // prune expired entries every 24h
     }),
-    secret: "Ourlittlesecret."
+    secret: "Ourlittlesecret.",
+    resave: false,
+    saveUninitialized: true
 }));
 
 // 2nd app.use
